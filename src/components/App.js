@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import unsplash from '../api/unsplash';
 import ImageList from './ImageList/ImageList';
 import SearchBar from './SearchBar';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
+import UIContainer from './UIContainer/UIContainer';
 
 const App = () => {
   const [appState, appSetState] = useState({ images: [] });
@@ -23,9 +26,13 @@ const App = () => {
   // }
 
   return (
-    <div className="ui container" style={{ marginTop: '10px' }}>
-      <SearchBar onFormSubmit={onFormSubmit} />
-      <ImageList images={appState.images} />
+    <div>
+      <Header />
+      <UIContainer
+        aside={<SearchBar onFormSubmit={onFormSubmit} />}
+        section={<ImageList images={appState.images} />}
+      />
+      <Footer />
     </div>
   );
 };
