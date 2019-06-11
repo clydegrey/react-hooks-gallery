@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  flex-wrap: nowrap;
+  background: pink;
+}
+
+.main aside {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 300px;
+  width: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.main section {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 75%;
+}
+
+.main aside .inner {
+  flex-grow: 1;
+  width: inherit;
+}
+.main aside .inner > div {
+  width: inherit;
+}
