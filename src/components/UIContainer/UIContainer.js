@@ -4,7 +4,7 @@ import { default as More } from '../Icons/more';
 import { default as IconLeft } from '../Icons/IconLeft';
 
 const UIContainer = props => {
-  const { aside, section } = props;
+  const { aside, section, accordion, accordion2 } = props;
   let searchBarRef = useRef(null);
   let imageListRef = useRef(null);
   let innerRef = useRef(null);
@@ -98,6 +98,8 @@ const UIContainer = props => {
               </button>
             </div>
             {aside}
+            {accordion}
+            {accordion2}
           </div>
         </div>
       </aside>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import unsplash from '../api/unsplash';
 import ImageList from './ImageList/ImageList';
 import SearchBar from './SearchBar';
+import Accordion from './Accordion/Accordion';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import styles from './App.module.css';
@@ -29,6 +30,8 @@ const App = () => {
       <Header />
       <UIContainer
         aside={<SearchBar onFormSubmit={onFormSubmit} />}
+        accordion={<Accordion />}
+        accordion2={<Accordion />}
         section={<ImageList images={appState.images} />}
       />
       <Footer />
