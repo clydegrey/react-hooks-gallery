@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './UIContainer.module.css';
+import { default as More } from '../Icons/more';
+import { default as IconLeft } from '../Icons/IconLeft';
 
 const UIContainer = props => {
   const { aside, section } = props;
@@ -60,6 +62,8 @@ const UIContainer = props => {
     setDrawerOpenState(!drawerOpenState);
   };
 
+  console.log(More);
+
   return (
     // <div className={styles.UIContainer}>
     //   <aside className={drawerOpenState ? styles.open : styles.closed}>
@@ -85,7 +89,13 @@ const UIContainer = props => {
             style={getStickyStyle()}
           >
             <div className={styles.button_container}>
-              <button onClick={drawerToggle}>open/close</button>
+              <button onClick={drawerToggle}>
+                {drawerOpenState ? (
+                  <IconLeft width={'33'} height={'33'} />
+                ) : (
+                  <More width={'33'} height={'33'} />
+                )}
+              </button>
             </div>
             {aside}
           </div>
