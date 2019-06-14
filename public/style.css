@@ -1,6 +1,10 @@
+body {
+  padding-top: 101px;
+}
+
 .header {
   background: tomato;
-  height: 100px;
+  height: 101px;
   position: fixed;
   top: 0;
   left: 0;

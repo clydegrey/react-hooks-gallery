@@ -24,10 +24,10 @@
   flex-direction: column;
 }
 .UIContainer section > div {
-  flex-grow: 1;
+  /* flex-grow: 1; */
   background: purple;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column;  */
 }
 
 /* .UIContainer section > div > * {
@@ -80,4 +80,14 @@
   background: #fff;
   padding: 2rem 0;
   width: inherit;
+  border: inset 2px green;
+}
+
+.closed,
+.open {
+  border: inset 2px purple;
+}
+
+section > div > div {
+  border: inset 2px green;
 }

@@ -3,49 +3,56 @@ import styles from './UIContainer.module.css';
 import { default as More } from '../Icons/more';
 import { default as IconLeft } from '../Icons/IconLeft';
 import getPosition from '../../helpers/getPosition';
+import getStickyPosition from '../../helpers/getStickyPosition';
+import getStickyStyle from '../../helpers/getStickyStyle';
 
 const UIContainer = props => {
-  const { aside, section, accordion, accordion2 } = props;
+  const { aside, section, accordion, accordion2, offset } = props;
   let searchBarRef = useRef(null);
   let imageListRef = useRef(null);
   let innerRef = useRef(null);
-
   const [stickyState, stickySetState] = useState('');
+  const [stickyState2, stickySetState2] = useState('');
   const [drawerOpenState, setDrawerOpenState] = useState(true);
-  // const getTop = el => el.current.getBoundingClientRect().top;
-  // const getBottom = el =>
-  //   el.current.getBoundingClientRect().top + el.current.clientHeight;
+  const [offsetState, setOffsetState] = useState(0);
 
-  // const getHeight = el => el.current.clientHeight;
+  const checkOffset = () => {
+    if (offset) {
+      console.log('we are here');
+      const offsetEl = document.querySelector(`#${offset}`);
+      if (offsetEl) {
+        setOffsetState(getPosition(offsetEl).height);
+      }
+      // const hhhh = getPosition(offsetEl).height;
+      // console.log(hhhh);
+
+      // offsetEl && setOffsetState(getPosition(offsetEl).height);
+      // setOffsetState(getPosition(offsetEl).height);
+    }
+  };
+
+  const offSetEl = document.querySelector(`#${offset}`);
+
   const stickyComponent = () => {
-    let fixedTop, fixedBottom;
-    // const searchBarTop = getTop(searchBarRef);
-    // const searchBarBottom = getBottom(searchBarRef);
-    // const imageListTop = getTop(imageListRef);
-    // const imageListBottom = getBottom(imageListRef);
-    // const innerHeight = getHeight(innerRef);
-    // const sectionHeight = getHeight(imageListRef);
-
     const searchBar = getPosition(searchBarRef);
     const imageList = getPosition(imageListRef);
     const section = getPosition(imageListRef);
     const inner = getPosition(innerRef);
-    console.log(inner.height);
-
-    if (section.height <= inner.height) {
-      stickySetState('');
-    } else if (
-      searchBar.top <= 0 &&
-      searchBar.bottom >= 0 &&
-      searchBar.bottom > inner.height
-    ) {
-      stickySetState('top');
-    } else if (searchBar.top <= 0 && searchBar.bottom <= inner.height) {
-      stickySetState('bottom');
-    } else {
-      stickySetState('');
-    }
+    const offsetHeight = offSetEl ? getPosition(offSetEl).height : 0;
+    //const offsetHeight = offsetState;
+    const stickyValue = getStickyPosition(
+      section,
+      inner,
+      searchBar,
+      offsetHeight
+    );
+    stickySetState(stickyValue);
   };
+
+  useEffect(() => {
+    checkOffset();
+    // stickyComponent();
+  });
 
   useEffect(() => {
     window.addEventListener('scroll', stickyComponent);
@@ -56,46 +63,19 @@ const UIContainer = props => {
     };
   }, []);
 
-  const getStickyStyle = () => {
-    let stickyStyle = { position: 'relative' };
-    if (stickyState === 'top') {
-      stickyStyle = { position: 'fixed', top: '0' };
-    } else if (stickyState === 'bottom') {
-      stickyStyle = { position: 'absolute', bottom: '0' };
-    }
-    return stickyStyle;
-  };
-
+  const stickyStyle = getStickyStyle(
+    stickyState,
+    offSetEl ? getPosition(offSetEl).height : 0
+  );
   const drawerToggle = () => {
     setDrawerOpenState(!drawerOpenState);
   };
 
-  // console.log(More);
-
   return (
-    // <div className={styles.UIContainer}>
-    //   <aside className={drawerOpenState ? styles.open : styles.closed}>
-    //     <div className={styles.inner} ref={searchBarRef}>
-    //       <div ref={innerRef} style={getStickyStyle()}>
-    //         <div className={styles.button_container}>
-    //           <button onClick={drawerToggle}>open/close</button>
-    //         </div>
-    //         {aside}
-    //       </div>
-    //     </div>
-    //   </aside>
-    //   <section>
-    //     <div ref={imageListRef}>{section}</div>
-    //   </section>
-    // </div>
     <div className={styles.UIContainer}>
       <aside className={drawerOpenState ? styles.open : styles.closed}>
         <div className={styles.inner} ref={searchBarRef}>
-          <div
-            className={styles.drawer}
-            ref={innerRef}
-            style={getStickyStyle()}
-          >
+          <div className={styles.drawer} ref={innerRef} style={stickyStyle}>
             <div className={styles.button_container}>
               <button onClick={drawerToggle}>
                 {drawerOpenState ? (
@@ -105,6 +85,7 @@ const UIContainer = props => {
                 )}
               </button>
             </div>
+
             {aside}
             {accordion}
             {accordion2}

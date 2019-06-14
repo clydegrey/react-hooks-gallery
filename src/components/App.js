@@ -7,8 +7,10 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import styles from './App.module.css';
 import UIContainer from './UIContainer/UIContainer';
+import { tsPropertySignature } from '@babel/types';
 
-const App = () => {
+const App = props => {
+  const { offset } = props;
   let searchBarRef = useRef(null);
   let imageListRef = useRef(null);
   let innerRef = useRef(null);
@@ -27,8 +29,8 @@ const App = () => {
 
   return (
     <div>
-      <Header />
       <UIContainer
+        offset={offset}
         aside={<SearchBar onFormSubmit={onFormSubmit} />}
         accordion={<Accordion />}
         accordion2={<Accordion />}
