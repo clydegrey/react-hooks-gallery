@@ -10,7 +10,7 @@ const Accordion = () => {
 
   const [accordionIsOpen, setAccordionIsOpen] = useState(false);
   return (
-    <div class="card">
+    <div className="card">
       <AccordionHeader
         onClickHandler={onClickHandler}
         accordionIsOpen={accordionIsOpen}

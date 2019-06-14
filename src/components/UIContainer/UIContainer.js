@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './UIContainer.module.css';
 import { default as More } from '../Icons/more';
 import { default as IconLeft } from '../Icons/IconLeft';
+import getPosition from '../../helpers/getPosition';
 
 const UIContainer = props => {
   const { aside, section, accordion, accordion2 } = props;
@@ -11,28 +12,35 @@ const UIContainer = props => {
 
   const [stickyState, stickySetState] = useState('');
   const [drawerOpenState, setDrawerOpenState] = useState(true);
-  const getTop = el => el.current.getBoundingClientRect().top;
-  const getBottom = el =>
-    el.current.getBoundingClientRect().top + el.current.clientHeight;
+  // const getTop = el => el.current.getBoundingClientRect().top;
+  // const getBottom = el =>
+  //   el.current.getBoundingClientRect().top + el.current.clientHeight;
 
-  const getHeight = el => el.current.clientHeight;
+  // const getHeight = el => el.current.clientHeight;
   const stickyComponent = () => {
     let fixedTop, fixedBottom;
-    const searchBarTop = getTop(searchBarRef);
-    const searchBarBottom = getBottom(searchBarRef);
-    const imageListTop = getTop(imageListRef);
-    const imageListBottom = getBottom(imageListRef);
-    const innerHeight = getHeight(innerRef);
-    const sectionHeight = getHeight(imageListRef);
-    if (sectionHeight <= innerHeight) {
+    // const searchBarTop = getTop(searchBarRef);
+    // const searchBarBottom = getBottom(searchBarRef);
+    // const imageListTop = getTop(imageListRef);
+    // const imageListBottom = getBottom(imageListRef);
+    // const innerHeight = getHeight(innerRef);
+    // const sectionHeight = getHeight(imageListRef);
+
+    const searchBar = getPosition(searchBarRef);
+    const imageList = getPosition(imageListRef);
+    const section = getPosition(imageListRef);
+    const inner = getPosition(innerRef);
+    console.log(inner.height);
+
+    if (section.height <= inner.height) {
       stickySetState('');
     } else if (
-      searchBarTop <= 0 &&
-      searchBarBottom >= 0 &&
-      searchBarBottom > innerHeight
+      searchBar.top <= 0 &&
+      searchBar.bottom >= 0 &&
+      searchBar.bottom > inner.height
     ) {
       stickySetState('top');
-    } else if (searchBarTop <= 0 && searchBarBottom <= innerHeight) {
+    } else if (searchBar.top <= 0 && searchBar.bottom <= inner.height) {
       stickySetState('bottom');
     } else {
       stickySetState('');
@@ -62,7 +70,7 @@ const UIContainer = props => {
     setDrawerOpenState(!drawerOpenState);
   };
 
-  console.log(More);
+  // console.log(More);
 
   return (
     // <div className={styles.UIContainer}>

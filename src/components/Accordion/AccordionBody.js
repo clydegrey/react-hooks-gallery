@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Styles from './Accordion.module.css';
 
 const AccordionBody = props => {
-  const [accordionIsOpen, setAccordionIsOpen] = useState({ weird: 'ok' });
+  const [accordionIsOpen, setAccordionIsOpen] = useState(false);
 
   useEffect(() => setAccordionIsOpen(props.accordionIsOpen));
   return (
